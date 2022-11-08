@@ -1,6 +1,5 @@
 {
-  "name": "syncit",
-  "private": true,
+  "name": "@bigbinary/syncit",
   "license": "MIT",
   "scripts": {
     "lerna": "lerna"
@@ -10,5 +9,20 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "description": "<p align=\"center\">   <img width=\"100px\" height=\"100px\" src=\"https://user-images.githubusercontent.com/13651389/79969148-a9c57280-84c3-11ea-9063-cb8066a12c66.png\"> </p>",
+  "version": "1.0.0",
+  "main": ".eslintrc.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bigbinary/syncit.git"
+  },
+  "author": "mohit",
+  "bugs": {
+    "url": "https://github.com/bigbinary/syncit/issues"
+  },
+  "homepage": "https://github.com/bigbinary/syncit#readme"
 }
