@@ -1,6 +1,7 @@
 {
   "name": "@bigbinary/syncit",
   "license": "MIT",
+  "private":"true",
   "scripts": {
     "lerna": "lerna"
   },
