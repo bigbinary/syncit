@@ -1,5 +1,5 @@
 {
-  "name": "@syncit/transporter",
+  "name": "@bigbinary/syncit-transporter",
   "version": "0.3.2",
   "description": "syncit transporters",
   "author": "Yanzhen Yu <yanzhen@smartx.com>",
@@ -30,7 +30,7 @@
     "test": "jest",
     "build": "rollup --config",
     "typings": "tsc -d --emitDeclarationOnly --declarationDir typings",
-    "prepublish": "yarn build && yarn typings"
+    "prepublish": "yarn build"
   },
   "bugs": {
     "url": "https://github.com/Yuyz0112/syncit/issues"
