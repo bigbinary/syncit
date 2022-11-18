@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import './parcel-require';
-import Peer from 'peerjs';
+import Peer, { DataConnection } from 'peerjs';
 import {
   Transporter,
   TransporterEvents,
@@ -36,7 +36,7 @@ export class PeerjsTransporter<T> implements Transporter<T> {
   uid: string;
   role: PeerjsTransporterOptions['role'];
   peer: Peer;
-  conn?: Peer.DataConnection;
+  conn?: DataConnection;
   opened = false;
   temp: Array<any> = [];
   tempLength = 0;
@@ -56,7 +56,7 @@ export class PeerjsTransporter<T> implements Transporter<T> {
         this.opened = true;
         console.info('connection opened', Date.now());
       });
-      conn.on('data', data => {
+      conn.on('data', (data: any) => {
         const { event, payload } = data;
         this.handlers[event as TransporterEvents].map(h =>
           h({
@@ -94,7 +94,7 @@ export class PeerjsTransporter<T> implements Transporter<T> {
         this.conn = conn;
         resolve();
       });
-      conn.on('data', data => {
+      conn.on('data', (data: any) => {
         data = this.joinData(data);
         if (!data) return;
         const { event, payload } = data;

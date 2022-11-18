@@ -55,6 +55,6 @@
   "dependencies": {
     "@syncit/core": "^0.2.0",
     "agora-rtm-sdk": "^1.2.2",
-    "peerjs": "^1.2.0"
+    "peerjs": "^1.4.7"
   }
 }
