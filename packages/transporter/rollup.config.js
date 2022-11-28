@@ -51,7 +51,7 @@ export default [
       },
     ],
   },
-  ...['base', 'local-storage', 'peerjs'].map(name => ({
+  ...['base', 'peerjs'].map(name => ({
     ...sharedConfig,
     input: `src/${name}.ts`,
     output: [

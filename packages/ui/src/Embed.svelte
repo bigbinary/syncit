@@ -21,7 +21,6 @@ import {
     customAlphabet
 } from 'nanoid';
 import {
-    t,
     setCurrentLanguage
 } from './locales';
 
@@ -44,11 +43,6 @@ const buffer = new SourceBuffer({
     },
 });
 
-let selecting = false;
-let mask;
-$: mask && document.body.appendChild(mask);
-let blockElSet = new Set();
-
 const service = createEmbedService({
     transporter,
     record,
@@ -60,60 +54,6 @@ const controlService = createEmbedControlService({
     record,
 });
 let controlCurrent = controlService.state;
-
-const highlight = target => {
-    const {
-        x,
-        y,
-        width,
-        height
-    } = target.getBoundingClientRect();
-    Object.assign(mask.style, {
-        left: `${x}px`,
-        top: `${y}px`,
-        width: `${width}px`,
-        height: `${height}px`,
-        display: 'inherit',
-    });
-};
-const removeHighlight = () => {
-    Object.assign(mask.style, {
-        left: 0,
-        top: 0,
-        width: 0,
-        height: 0,
-        display: 'none',
-    });
-};
-
-const over = event => {
-    if (
-        event.target &&
-        ref !== event.target &&
-        !ref.contains(event.target) &&
-        event.target !== document.body
-    ) {
-        highlight(event.target);
-    }
-};
-const click = event => {
-    if (!selecting || ref.contains(event.target)) {
-        return;
-    }
-    event.target.classList.add('rr-block');
-    blockElSet = blockElSet.add(event.target);
-    cancelSelect();
-};
-const cancelSelect = () => {
-    selecting = false;
-    removeHighlight();
-    window.removeEventListener('mousemove', over, {
-        capture: true
-    });
-    window.removeEventListener('click', click, {
-        capture: true
-    });
-};
 
 onMount(() => {
     if (lang) {
@@ -169,3 +109,6 @@ onDestroy(() => {
     controlService.stop();
 });
 </script>
+
+
+
