@@ -49,6 +49,7 @@ export class PeerjsTransporter<T> implements Transporter<T> {
       host: peerHost,
       port: peerPort,
       path: peerPath,
+      secure: true
     });
     this.peer.on('connection', conn => {
       this.conn = conn;
