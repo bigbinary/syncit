@@ -12,6 +12,11 @@
   "module": "es/index.js",
   "unpkg": "dist/index.js",
   "typings": "typings/index.d.ts",
+  "yalcWatch": {
+    "watchFolder": "dist",
+    "buildWatchCommand": "tsc --watch",
+    "extensions": "js,png,svg,gif,jpeg,css"
+  },
   "directories": {
     "lib": "lib",
     "test": "__tests__"
@@ -30,7 +35,8 @@
     "test": "jest",
     "build": "rollup --config",
     "typings": "tsc -d --emitDeclarationOnly --declarationDir typings",
-    "prepublish": "yarn build"
+    "prepublish": "yarn build",
+    "yalc-watch": "yalc-watch"
   },
   "bugs": {
     "url": "https://github.com/bigbinary/syncit/issues"
@@ -55,6 +61,7 @@
   "dependencies": {
     "@syncit/core": "^0.2.0",
     "agora-rtm-sdk": "^1.2.2",
-    "peerjs": "^1.4.7"
+    "peerjs": "^1.4.7",
+    "yalc-watch": "^0.0.6"
   }
 }

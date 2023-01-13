@@ -49,31 +49,33 @@ export class PeerjsTransporter<T> implements Transporter<T> {
       host: peerHost,
       port: peerPort,
       path: peerPath,
-      secure: true
+      secure: true,
     });
-    this.peer.on('connection', conn => {
-      this.conn = conn;
-      conn.on('open', () => {
-        this.opened = true;
-        console.info('connection opened', Date.now());
+    setTimeout(() => {
+      this.peer.on('connection', conn => {
+        this.conn = conn;
+        conn.on('open', () => {
+          this.opened = true;
+          console.info('connection opened', Date.now());
+        });
+        conn.on('data', (data: any) => {
+          const { event, payload } = data;
+          this.handlers[event as TransporterEvents].map(h =>
+            h({
+              event: event,
+              payload: payload,
+            })
+          );
+        });
+        conn.on('close', () => {
+          console.info('connection closed');
+          delete this.conn;
+        });
+        conn.on('error', e => {
+          console.error(e);
+        });
       });
-      conn.on('data', (data: any) => {
-        const { event, payload } = data;
-        this.handlers[event as TransporterEvents].map(h =>
-          h({
-            event: event,
-            payload: payload,
-          })
-        );
-      });
-      conn.on('close', () => {
-        console.info('connection closed');
-        delete this.conn;
-      });
-      conn.on('error', e => {
-        console.error(e);
-      });
-    });
+    }, 3000);
   }
 
   get embedUid() {
@@ -85,35 +87,41 @@ export class PeerjsTransporter<T> implements Transporter<T> {
   }
 
   connect() {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       const targetId = `${this.uid}-${this.role === 'app' ? 'embed' : 'app'}`;
-      const conn = this.peer.connect(targetId, {
-        serialization: 'json',
-      });
-      conn.on('open', () => {
-        console.info('connection opened', Date.now());
-        this.conn = conn;
-        resolve();
-      });
-      conn.on('data', (data: any) => {
-        data = this.joinData(data);
-        if (!data) return;
-        const { event, payload } = data;
-        this.handlers[event as TransporterEvents].map(h =>
-          h({
-            event: event,
-            payload: payload,
-          })
-        );
-      });
+      setTimeout(() => {
+        const conn = this.peer.connect(targetId, {
+          serialization: 'json',
+        });
+        if (!conn) {
+          reject();
+          this.connect();
+        }
+        conn.on('open', () => {
+          console.info('connection opened', Date.now());
+          this.conn = conn;
+          resolve();
+        });
+        conn.on('data', (data: any) => {
+          data = this.joinData(data);
+          if (!data) return;
+          const { event, payload } = data;
+          this.handlers[event as TransporterEvents].map(h =>
+            h({
+              event: event,
+              payload: payload,
+            })
+          );
+        });
 
-      conn.on('close', () => {
-        console.info('connection closed');
-        delete this.conn;
-      });
-      conn.on('error', e => {
-        console.error(e);
-      });
+        conn.on('close', () => {
+          console.info('connection closed');
+          delete this.conn;
+        });
+        conn.on('error', e => {
+          console.error(e);
+        });
+      }, 3000);
     });
   }
 
@@ -128,7 +136,7 @@ export class PeerjsTransporter<T> implements Transporter<T> {
       const count = parseInt(partData[0].split('-')[1], 10);
       this.temp[index - 1] = partData[1];
       this.tempLength = this.tempLength + 1;
-  
+
       if (this.tempLength !== count) return;
       data = JSON.parse(this.temp.join(''));
       this.temp = [];
