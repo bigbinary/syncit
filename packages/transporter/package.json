@@ -1,9 +1,9 @@
 {
   "name": "@bigbinary/syncit-transporter",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "syncit transporters",
-  "author": "Yanzhen Yu <yanzhen@smartx.com>",
-  "homepage": "https://github.com/Yuyz0112/syncit#readme",
+  "author": "bigbinary",
+  "homepage": "https://github.com/bigbinary/syncit#readme",
   "license": "MIT",
   "publishConfig": {
     "access": "public"
@@ -24,7 +24,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Yuyz0112/syncit.git"
+    "url": "git+https://github.com/bigbinary/syncit.git"
   },
   "scripts": {
     "test": "jest",
@@ -33,7 +33,7 @@
     "prepublish": "yarn build"
   },
   "bugs": {
-    "url": "https://github.com/Yuyz0112/syncit/issues"
+    "url": "https://github.com/bigbinary/syncit/issues"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^8.0.1",
